@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginForm.css';
+import './LoginForm.css'; 
 import CrossIcon from '../assets/Cross.jpg';
 import LogoIcon from '../assets/logo_new 1.png';
 
@@ -19,12 +19,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 	return (
 		<div className='login-page'>
 			<div className='login-card'>
-				{/* X Button */}
+				{/* project (x) button */}
 				<button className='close-button'>
 					<img src={CrossIcon} alt='Close' className='close-icon' />
 				</button>
 
-				{/* CommuniTee Logo */}
+				{/* project CommuniTee Logo */}
 				<div className='logo-wrapper'>
 					<img
 						src={LogoIcon}
@@ -33,7 +33,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 					/>
 				</div>
 
-				{/* Form Section */}
+				{/* project form Section */}
 				<form onSubmit={handleSubmit} className='login-form'>
 					<input
 						type='text'
