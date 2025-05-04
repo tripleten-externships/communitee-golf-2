@@ -17,7 +17,7 @@ export const MessageTab = () => {
     <div>
       <div className="p-[16px]">
         {" "}
-        <h2 className="m-0 p-4 text-center">Messages ({messageCount})</h2>
+        <h2 className="m-0 p-4 text-center ">Messages ({messageCount})</h2>
         {/* {message list} */}
       </div>
     </div>
