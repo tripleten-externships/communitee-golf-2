@@ -6,7 +6,11 @@ export default {
     "./.storybook/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ["Poppins", "sans-serif"], // Use your actual font name},
+      },
+      plugins: [],
+    },
   },
-  plugins: [],
-}
+};

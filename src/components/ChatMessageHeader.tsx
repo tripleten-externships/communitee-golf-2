@@ -28,7 +28,7 @@ export const ChatMessageHeader = () => {
 
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-end">
         {" "}
         <img
           className="cursor-pointer"
@@ -38,12 +38,12 @@ export const ChatMessageHeader = () => {
         ></img>
         <img
           className="w-9 h-9 rounded-full mx-auto"
-          alt="avatar"
-          src={placeholder}
+          alt={user.name}
+          src={user.avatar || placeholder}
         ></img>
         {/* {message list} */}
       </div>
-      <h2 className="text-center">Name</h2>
+      <h2 className="text-base text-center pt-2 font-custom">{user.name}</h2>
     </div>
   );
 };
