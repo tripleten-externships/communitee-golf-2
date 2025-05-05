@@ -4,13 +4,44 @@ import React, { useState } from 'react';
 
 export const DropdownMenu: React.FC = () => {
 	const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+	const [message, setMessage] = useState<string>('');
+	const [sentMessage, setSentMessage] = useState<string | null>(null);
+	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
 	const handleSelect = (course: string) => {
 		setSelectedCourse(course);
+		setMessage('');
+	};
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!message.trim()) return;
+
+		// Show sent message notification
+		setSentMessage('Message sent!');
+		setMessage('');
+
+		// Clear any previous timer
+		if (timer) {
+			clearTimeout(timer);
+		}
+
+		const timeout = setTimeout(() => {
+			setSentMessage(null);
+		}, 2000);
+
+		setTimer(timeout);
+	};
+
+	const handleClose = () => {
+		setSelectedCourse(null);
+		setMessage('');
+		setSentMessage(null);
 	};
 
 	return (
-		<div className='relative inline-block text-left'>
+		<div className='relative inline-block text-left w-full'>
 			<Menu as='div'>
 				<div>location</div>
 				<div>
@@ -49,17 +80,19 @@ export const DropdownMenu: React.FC = () => {
 				</MenuItems>
 			</Menu>
 
-			{/* Show form after selection */}
 			{selectedCourse && (
-				<div className='mt-4 border p-4 rounded-md bg-gray-50 shadow-sm w-full'>
+				<div className='mt-4 border p-4 rounded-md bg-gray-50 shadow-sm w-full relative'>
 					<h3 className='text-sm font-medium text-gray-800 mb-2'>
 						Send a message to {selectedCourse}
 					</h3>
-					<form>
+
+					<form onSubmit={handleSubmit}>
 						<textarea
 							className='w-full p-2 border rounded-md text-sm'
 							placeholder='Type your message...'
 							rows={4}
+							value={message}
+							onChange={(e) => setMessage(e.target.value)}
 						></textarea>
 						<button
 							type='submit'
@@ -68,6 +101,19 @@ export const DropdownMenu: React.FC = () => {
 							Send
 						</button>
 					</form>
+
+					<button
+						onClick={handleClose}
+						className='absolute top-2 right-2 text-xs text-gray-500 hover:text-gray-800'
+					>
+						✕
+					</button>
+
+					{sentMessage && (
+						<div className='absolute -bottom-10 left-0 bg-green-100 text-green-700 text-sm p-2 rounded shadow w-full'>
+							{sentMessage}
+						</div>
+					)}
 				</div>
 			)}
 		</div>

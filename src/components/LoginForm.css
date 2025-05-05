@@ -2,10 +2,9 @@
 	width: 100vw;
 	height: 100vh;
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+	justify-content: left;
+	align-items: left;
 	background-color: #f5f5f5;
-	padding-right: 80px;
 }
 
 .login-card {

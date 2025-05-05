@@ -1,20 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LoginForm } from './LoginForm';
+import { LoginForm } from '../components/LoginForm';
+import { DropdownMenu } from '../components/DropdownMenu';
+import MessageBox from '../components/MessageBox';
 
 const meta = {
-	title: 'Components/LoginForm',
-	component: LoginForm,
+	title: 'Components/CombinedView',
+	component: LoginForm, // You can just pick any (storybook requires a component)
 	parameters: {
-		layout: 'centered',
+		layout: 'padded',
 	},
 	tags: ['autodocs'],
 } satisfies Meta<typeof LoginForm>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
-	args: {
-		onLogin: () => console.log('Login clicked'),
-	},
+	render: () => (
+		<div className='w-full min-h-screen flex justify-center items-start space-x-8 p-10 bg-gray-50'>
+			<LoginForm onLogin={() => {}} />
+			<DropdownMenu />
+			<br />
+			<MessageBox />
+		</div>
+	),
 };

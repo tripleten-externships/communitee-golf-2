@@ -1,17 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { crx } from "@crxjs/vite-plugin";
-import manifest from "./manifest.json";
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [react(), crx({ manifest })],
-  build: {
-    target: "esnext",
-    outDir: "dist",
-    rollupOptions: {
-      input: {
-        index: "index.html",
-      },
-    },
-  },
+	test: {
+		environment: 'jsdom', // <<== only jsdom, no browser mode!
+	},
 });
