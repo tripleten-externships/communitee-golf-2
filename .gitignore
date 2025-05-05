@@ -7,24 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
 *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Storybook
+# Storybook build
 storybook-static/
+*.storybook.log
+
+# Vitest coverage
+coverage/
 
 # Environment variables
 .env
@@ -33,4 +29,20 @@ storybook-static/
 .env.test.local
 .env.production.local
 
-*storybook.log
+# OS system files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Temporary files
+*.tmp
+*.temp
