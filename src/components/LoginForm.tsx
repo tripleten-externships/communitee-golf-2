@@ -1,57 +1,64 @@
-import React from "react";
+import React from 'react';
+import './LoginForm.css'; 
+import CrossIcon from '../assets/Cross.jpg';
+import LogoIcon from '../assets/logo_new 1.png';
 
 interface LoginFormProps {
-  onLogin: () => void;
+	onLogin: () => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+	const [username, setUsername] = React.useState('');
+	const [password, setPassword] = React.useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement actual login logic
-    onLogin();
-  };
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		onLogin();
+	};
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label
-          htmlFor="username"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Username
-        </label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        Sign in
-      </button>
-    </form>
-  );
+	return (
+		<div className='login-page'>
+			<div className='login-card'>
+				{/* project (x) button */}
+				<button className='close-button'>
+					<img src={CrossIcon} alt='Close' className='close-icon' />
+				</button>
+
+				{/* project CommuniTee Logo */}
+				<div className='logo-wrapper'>
+					<img
+						src={LogoIcon}
+						alt='CommuniTee Logo'
+						className='logo-image'
+					/>
+				</div>
+
+				{/* project form Section */}
+				<form onSubmit={handleSubmit} className='login-form'>
+					<input
+						type='text'
+						id='username'
+						value={username}
+						placeholder='Username'
+						onChange={(e) => setUsername(e.target.value)}
+						className='login-username'
+					/>
+					<input
+						type='password'
+						id='password'
+						value={password}
+						placeholder='Password'
+						onChange={(e) => setPassword(e.target.value)}
+						className='login-password'
+					/>
+					<button type='submit' className='login-button'>
+						Sign In
+					</button>
+					<div className='forgot-password'>
+						<a href='#'>Forgot Password?</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	);
 };
