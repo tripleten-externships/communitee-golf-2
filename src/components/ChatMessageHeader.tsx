@@ -1,7 +1,6 @@
 // import { useNavigate } from "react-router-dom";
 import placeholder from "../assets/placeholder.png";
 import backbutton from "../assets/backbtn.svg";
-// import { useState } from "react";
 import { useEffect, useState } from "react";
 
 export const ChatMessageHeader = () => {
@@ -19,10 +18,6 @@ export const ChatMessageHeader = () => {
       })
       .catch((err) => {
         console.error("Failed to load user", err);
-        setUser({
-          name: "Unknown User",
-          avatar: "",
-        });
       });
   }, []);
 
@@ -34,7 +29,7 @@ export const ChatMessageHeader = () => {
           className="cursor-pointer"
           alt="back-button"
           src={backbutton}
-          // onClick={}
+          // onClick={() => navigate(-1)}
         ></img>
         <img
           className="w-9 h-9 rounded-full mx-auto"
@@ -43,7 +38,9 @@ export const ChatMessageHeader = () => {
         ></img>
         {/* {message list} */}
       </div>
-      <h2 className="text-base text-center pt-2 font-custom">{user.name}</h2>
+      <h2 className="text-base text-center pt-2 font-custom">
+        {user.name || "Mary Jane"}
+      </h2>
     </div>
   );
 };
