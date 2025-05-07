@@ -1,11 +1,11 @@
 import React from 'react';
 
-import MessageBox from '../components/MessageBox';
+import { DropdownMenu } from './DropdownMenu';
 
 export const App: React.FC = () => {
 	return (
-		<div className='w-full min-h-screen flex justify-center items-center bg-gray-100 space-x-8 p-10'>
-			<MessageBox />
+		<div>
+			<DropdownMenu />
 		</div>
 	);
 };
