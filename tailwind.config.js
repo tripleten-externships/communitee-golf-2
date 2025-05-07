@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        custom: ['"Poppins"'],
+        custom: ["Poppins", "sans-serif"],
       },
+      plugins: [],
     },
-    plugins: [],
   },
 };
