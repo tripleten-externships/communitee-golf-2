@@ -9,19 +9,21 @@ export const MessageArea = () => {
           alt="avatar"
           className="w-full h-full rounded-full object-cover"
         />
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center font-custom">
           2
         </span>
       </div>
 
       <div className="flex-1 min-w-0">
-        <h2 className="font-semibold text-gray-700">Name</h2>
-        <p className="text-sm text-gray-500 truncate w-full">
+        <h2 className="font-semibold text-gray-700 font-custom">Name</h2>
+        <p className="text-sm text-gray-500 truncate w-full font-custom">
           what are the rules for playing golf in terrible weather conditions?
         </p>
       </div>
 
-      <p className="text-xs text-gray-400 ml-2 whitespace-nowrap">1h</p>
+      <p className="text-xs text-gray-400 ml-2 whitespace-nowrap font-custom">
+        1h
+      </p>
     </div>
   );
 };
