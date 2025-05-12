@@ -36,7 +36,6 @@ export const ChatMessageHeader = () => {
           alt={user.name}
           src={user.avatar || placeholder}
         ></img>
-        {/* {message list} */}
       </div>
       <h2 className="text-base text-center pt-2 font-custom">
         {user.name || "Mary Jane"}
