@@ -1,9 +1,30 @@
-// import jacob from "../assets/jacob.jpg";
-
-import { MessageStream } from "../type"; // adjust the path
+import { MessageStream } from "../type";
 import { messageStreams } from "../mock/messageStream";
-
+import {
+  format,
+  isToday,
+  isYesterday,
+  differenceInMinutes,
+  differenceInHours,
+} from "date-fns";
 import { useState } from "react";
+
+export function formatMessageTime(isoString: string): string {
+  const date = new Date(isoString);
+
+  if (isToday(date)) {
+    const minutes = differenceInMinutes(new Date(), date);
+    if (minutes < 1) return "Just now";
+    if (minutes < 60) return `${minutes}m`;
+
+    const hours = differenceInHours(new Date(), date);
+    return `${hours}h`;
+  }
+
+  if (isYesterday(date)) return "Yesterday";
+
+  return format(date, "MMM d");
+}
 
 export const MessageArea = () => {
   const [selectedStream, setSelectedStream] = useState<MessageStream | null>(
@@ -11,34 +32,16 @@ export const MessageArea = () => {
   );
 
   if (selectedStream) {
-    return (
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-2">{selectedStream.clientName}</h2>
-
-        <div className="mt-4 space-y-2">
-          {selectedStream.messages.map((msg) => (
-            <div key={msg.id} className="text-sm text-gray-700">
-              <span className="font-semibold">
-                {msg.senderId === "client"
-                  ? selectedStream.clientName
-                  : msg.senderId}
-                :
-              </span>{" "}
-              {msg.content}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+    return <div className="p-4"></div>;
   }
 
   return (
-    <div className="space-y-3">
+    <div>
       {messageStreams.map((stream: MessageStream) => (
         <div
           key={stream.id}
-          onClick={() => setSelectedStream(stream)} // ✅ This makes it "clickable"
-          className="flex items-center p-3 bg-gray-50 rounded-2xl relative cursor-pointer hover:bg-gray-100"
+          onClick={() => setSelectedStream(stream)}
+          className="flex items-center p-3 bg-gray-50 rounded-2xl relative mb-3 cursor-pointer"
         >
           <div className="relative w-12 h-12 mr-4 shrink-0">
             <img
@@ -63,7 +66,7 @@ export const MessageArea = () => {
           </div>
 
           <p className="text-xs text-gray-400 ml-2 whitespace-nowrap font-custom">
-            {/* Insert time format here if needed */}
+            {formatMessageTime(stream.lastMessageAt)}
           </p>
         </div>
       ))}
