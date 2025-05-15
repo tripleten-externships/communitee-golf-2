@@ -1,7 +1,7 @@
+@import url(./vendor/fonts.css);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url(./vendor/fonts.css);
 
 body {
   margin: 0;

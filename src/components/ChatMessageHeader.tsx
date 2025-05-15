@@ -1,26 +1,12 @@
-// import { useNavigate } from "react-router-dom";
 import placeholder from "../assets/placeholder.png";
 import backbutton from "../assets/backbtn.svg";
-import { useEffect, useState } from "react";
+import { User } from "../types";
 
-export const ChatMessageHeader = () => {
-  const [user, setUser] = useState({ name: "", avatar: "" });
-  // const navigate = useNavigate();
+type ChatHeaderProps = {
+  user: User;
+};
 
-  useEffect(() => {
-    fetch("")
-      .then((res) => res.json())
-      .then((data) => {
-        setUser({
-          name: data.name,
-          avatar: data.avatarUrl,
-        });
-      })
-      .catch((err) => {
-        console.error("Failed to load user", err);
-      });
-  }, []);
-
+export const ChatMessageHeader = ({ user }: ChatHeaderProps) => {
   return (
     <div>
       <div className="flex justify-between items-end">
@@ -29,7 +15,6 @@ export const ChatMessageHeader = () => {
           className="cursor-pointer"
           alt="back-button"
           src={backbutton}
-          // onClick={() => navigate(-1)}
         ></img>
         <img
           className="w-9 h-9 rounded-full mx-auto"
