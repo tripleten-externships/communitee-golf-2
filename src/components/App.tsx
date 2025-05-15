@@ -1,6 +1,7 @@
 import React from "react";
 import { LoginForm } from "./LoginForm";
 import { MessageArea } from "./MessageArea";
+import { messageStreams } from "../mock/messageStream";
 
 export const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -11,7 +12,12 @@ export const App: React.FC = () => {
         <LoginForm onLogin={() => setIsLoggedIn(true)} />
       ) : (
         // <div>Chat interface will go here</div>
-        <MessageArea></MessageArea>
+        <MessageArea
+          streams={messageStreams}
+          onSelectStream={(stream) => {
+            console.log(stream);
+          }}
+        />
       )}
     </div>
   );

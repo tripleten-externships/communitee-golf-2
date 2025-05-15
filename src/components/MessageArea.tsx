@@ -1,32 +1,13 @@
 import { MessageStream } from "../type";
-import { messageStreams } from "../mock/messageStream";
-import {
-  format,
-  isToday,
-  isYesterday,
-  differenceInMinutes,
-  differenceInHours,
-} from "date-fns";
+import { formatMessageTime } from "../utils/formatMessageTime";
 import { useState } from "react";
 
-export function formatMessageTime(isoString: string): string {
-  const date = new Date(isoString);
+type MessageAreaProps = {
+  streams: MessageStream[];
+  onSelectStream: (stream: MessageStream) => void;
+};
 
-  if (isToday(date)) {
-    const minutes = differenceInMinutes(new Date(), date);
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return `${minutes}m`;
-
-    const hours = differenceInHours(new Date(), date);
-    return `${hours}h`;
-  }
-
-  if (isYesterday(date)) return "Yesterday";
-
-  return format(date, "MMM d");
-}
-
-export const MessageArea = () => {
+export const MessageArea = ({ streams, onSelectStream }: MessageAreaProps) => {
   const [selectedStream, setSelectedStream] = useState<MessageStream | null>(
     null
   );
@@ -37,11 +18,14 @@ export const MessageArea = () => {
 
   return (
     <div>
-      {messageStreams.map((stream: MessageStream) => (
+      {streams.map((stream: MessageStream) => (
         <div
           key={stream.id}
-          onClick={() => setSelectedStream(stream)}
-          className="flex items-center p-3 bg-gray-50 rounded-2xl relative mb-3 cursor-pointer"
+          onClick={() => {
+            setSelectedStream(stream);
+            onSelectStream(stream);
+          }}
+          className="flex items-center p-3 bg-gray-50 rounded-2xl relative mb-3 cursor-pointer transition-opacity duration-300 hover:bg-gray-200"
         >
           <div className="relative w-12 h-12 mr-4 shrink-0">
             <img
