@@ -14,7 +14,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^8.6.12"
@@ -28,6 +27,7 @@
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
     "@tailwindcss/postcss7-compat": "^2.2.17",
+    "@tailwindcss/vite": "^4.1.5",
     "@types/chrome": "^0.0.263",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
