@@ -10,7 +10,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual login logic
     onLogin();
   };
 
