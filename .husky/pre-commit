@@ -8,3 +8,4 @@ fi
 npx validate-branch-name
 npm run lint
 npm test
+npm run lint
