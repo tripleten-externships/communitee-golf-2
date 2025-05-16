@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useCallback  } from 'react';
 import submit from '../assets/submit.png';
 
 const MOCK_CLIENT_ID = '1';
@@ -22,43 +22,43 @@ const MessageArea = () => {
     const clientId = MOCK_CLIENT_ID;
     const userId = MOCK_USER_ID;
 
-    const fetchMessages = async () => {
-        if(!clientId ||!token) return;
-        try{
-            const res= await fetch(`http://localhost:8080/message-stream/${clientId}`, {
-                headers:{
-                    Authorization: `Bearer ${token}`,
-                }});
-                const data = await res.json();
-                setMessages(data.messages);
-                console.log('Fetched messages:', data.messages);
-
-        }catch(err){
-            console.error('Error fetching messages:', err);
-        }
-
-    }
-
-    // Fetch messages when the component mounts or when clientId changes
-    useEffect(() => {
-  const fetchMessages = async () => {
-    if (!clientId || !token) return;
-    try {
-      const res = await fetch(`http://localhost:8080/message-stream/${clientId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setMessages(data.messages);
-      console.log('Fetched messages:', data.messages);
-    } catch (err) {
-      console.error('Error fetching messages:', err);
-    }
-  };
-
-  fetchMessages();
+    const fetchMessages = useCallback(async () => {
+  if (!clientId || !token) return;
+  try {
+    const res = await fetch(`http://localhost:8080/message-stream/${clientId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await res.json();
+    setMessages(data.messages);
+    console.log('Fetched messages:', data.messages);
+  } catch (err) {
+    console.error('Error fetching messages:', err);
+  }
 }, [clientId, token]);
+
+   // Fetch messages on component mount
+    useEffect(() => {
+  fetchMessages();
+}, [fetchMessages]);
+
+
+// Mark as read after messages are loaded
+useEffect(() => {
+  fetchMessages().then(() => {
+    fetch(`http://localhost:8080/message-stream/${clientId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to mark as read');
+      })
+      .catch((err) => console.error('Read marking failed:', err));
+  });
+}, [clientId, fetchMessages, token]);
 
 
     const handleSend = async() => {
