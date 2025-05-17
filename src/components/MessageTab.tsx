@@ -1,9 +1,6 @@
 import { MessageTabProps } from "../types/types";
 
-export const MessageTab = ({
-  unreadCount,
-}: // setUnreadCount,
-MessageTabProps) => {
+export const MessageTab = ({ unreadCount }: MessageTabProps) => {
   return (
     <div>
       <div className="p-[16px]">
