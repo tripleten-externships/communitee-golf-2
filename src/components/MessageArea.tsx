@@ -1,4 +1,4 @@
-import { MessageStream } from "../type";
+import { MessageStream } from "../types/type";
 import { formatMessageTime } from "../utils/formatMessageTime";
 import { useState } from "react";
 
