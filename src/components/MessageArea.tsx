@@ -1,5 +1,4 @@
 import { useEffect, useState,useCallback  } from 'react';
-import submit from '../assets/submit.png';
 
 const MOCK_CLIENT_ID = '1';
 const MOCK_USER_ID = 'user-123';
@@ -16,7 +15,7 @@ const MessageArea = () => {
 
     
     const [messages, setMessages] = useState<Message[]>([]);
-    const [input, setInput] = useState<string>('');
+
 
     const token = localStorage.getItem('token');
     const clientId = MOCK_CLIENT_ID;
@@ -61,46 +60,6 @@ useEffect(() => {
 }, [clientId, fetchMessages, token]);
 
 
-    const handleSend = async() => {
-        if (!input.trim()||!token ||!clientId) 
-            return;
-
-        console.log('Sending message:', input);
-        try{
-            setMessages((prev) => [
-                ...prev,
-                {
-                  id: `${Date.now()}`,
-                  content: input,
-                  sentAt: new Date().toISOString(),
-                  senderId: userId,
-                },
-              ]);
-              
-
-            const res = await fetch(`http://localhost:8080/message/${clientId}`, {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({content:input})
-
-        });
-
-        console.log('POST response:', res.status); 
-
-        if (!res.ok) {
-          const errData = await res.json();
-          console.error('Server error:', errData);
-          return;
-        }
-        setInput('');
-        fetchMessages();
-        }catch(err){
-            console.error('Error sending message:', err);
-        }};
-
         const formatTimestamp = (sentAt: string, now = new Date()) => {
             const  sentTime = new Date(sentAt);
             const diff = (now.getTime() - sentTime.getTime())/1000;
@@ -141,27 +100,6 @@ useEffect(() => {
               </div>
             );
             })}
-          </div>
-          <div className=" relative w-full">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-              placeholder="Write a message..."
-              className="w-full pr-10 p-2 rounded border border-gray-300"
-            />
-            <button
-              onClick={handleSend}
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-            >
-              <img src={submit} alt="Send" className="w-[16px] h-[13.5px]"/>
-            </button>
           </div>
         </div>
       );
