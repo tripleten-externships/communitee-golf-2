@@ -1,6 +1,6 @@
 import React from "react";
-import closeIcon from "../assets/Icon.png";
-import logo from "../assets/logo_new 1.png";
+import closeIcon from "../assets/close.png";
+import logo from "../assets/logo.png";
 
 interface LoginFormProps {
 	onLogin: () => void;
