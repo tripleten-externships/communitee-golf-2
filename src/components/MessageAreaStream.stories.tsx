@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import MessageArea from "./MessageAreaStream";
+import MessageAreaStream from "./MessageAreaStream";
 import "../index.css";
 
-const meta: Meta<typeof MessageArea> = {
+const meta: Meta<typeof MessageAreaStream> = {
   title: "Components/MessageArea",
-  component: MessageArea,
+  component: MessageAreaStream,
   argTypes: {
     initialMessages: {
       control: "object",
@@ -13,7 +13,7 @@ const meta: Meta<typeof MessageArea> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MessageArea>;
+type Story = StoryObj<typeof MessageAreaStream>;
 
 export const Default: Story = {
   args: {
