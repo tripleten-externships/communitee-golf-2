@@ -10,7 +10,11 @@ type Message = {
   senderId: string;
 };
 
-const MessageArea = ({ initialMessages }: { initialMessages?: Message[] }) => {
+const MessageAreaStream = ({
+  initialMessages,
+}: {
+  initialMessages?: Message[];
+}) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   const token = localStorage.getItem("token");
@@ -120,4 +124,4 @@ const MessageArea = ({ initialMessages }: { initialMessages?: Message[] }) => {
   );
 };
 
-export default MessageArea;
+export default MessageAreaStream;

@@ -1,6 +1,6 @@
 import React from "react";
 import { LoginForm } from "./LoginForm";
-import  MessageArea  from "./MessageArea";
+import MessageAreaStream from "./MessageAreaStream";
 
 export const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -10,7 +10,7 @@ export const App: React.FC = () => {
       {!isLoggedIn ? (
         <LoginForm onLogin={() => setIsLoggedIn(true)} />
       ) : (
-        <MessageArea />
+        <MessageAreaStream />
       )}
     </div>
   );

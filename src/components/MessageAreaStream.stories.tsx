@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import MessageArea from "../components/MessageArea";
+import MessageArea from "./MessageAreaStream";
 import "../index.css";
 
 const meta: Meta<typeof MessageArea> = {
