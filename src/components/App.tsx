@@ -1,13 +1,16 @@
 import React from 'react';
-
-import MessageBox from '../components/MessageBox';
+import { LoginForm } from './LoginForm';
 
 export const App: React.FC = () => {
+	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
 	return (
-		<div className='w-full min-h-screen flex justify-center items-center bg-gray-100 space-x-8 p-10'>
-			<MessageBox />
+		<div className='w-96 h-96 bg-white p-4'>
+			{!isLoggedIn ? (
+				<LoginForm onLogin={() => setIsLoggedIn(true)} />
+			) : (
+				<div>Chat interface will go here</div>
+			)}
 		</div>
 	);
 };
-
-export default App;
