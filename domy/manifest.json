@@ -1,0 +1,17 @@
+{
+	"name": "Tea Reminder Extension",
+	"description": "Sends a tea reminder every few seconds",
+	"version": "1.0",
+	"manifest_version": 3,
+	"permissions": ["notifications"],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"action": {
+		"default_popup": "popup.html",
+		"default_title": "Tea Reminder"
+	},
+	"icons": {
+		"48": "tea_icon.png"
+	}
+}
