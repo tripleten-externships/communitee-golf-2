@@ -11,7 +11,6 @@ export const App: React.FC = () => {
       {!isLoggedIn ? (
         <LoginForm onLogin={() => setIsLoggedIn(true)} />
       ) : (
-        // <div>Chat interface will go here</div>
         <MessageArea
           streams={messageStreams}
           onSelectStream={(stream) => {
