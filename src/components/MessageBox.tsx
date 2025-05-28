@@ -65,7 +65,7 @@ export default function MessageBox() {
 					type='button'
 					className='ml-3 disabled:opacity-50 disabled:cursor-not-allowed'
 				>
-					<img src='Send.png' alt='Send' className='w-6 h-6' />
+					<img src='send.png' alt='Send' className='w-6 h-6' />
 				</button>
 			</div>
 
