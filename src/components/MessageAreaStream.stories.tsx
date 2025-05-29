@@ -3,7 +3,7 @@ import MessageAreaStream from "./MessageAreaStream";
 import "../index.css";
 
 const meta: Meta<typeof MessageAreaStream> = {
-  title: "Components/MessageArea",
+  title: "Components/MessageAreaStream",
   component: MessageAreaStream,
   argTypes: {
     initialMessages: {
