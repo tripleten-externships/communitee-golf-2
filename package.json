@@ -21,13 +21,16 @@
     "storybook": "^8.6.12"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
     "@crxjs/vite-plugin": "^2.0.0-beta.21",
     "@storybook/addon-essentials": "^8.6.12",
     "@storybook/addon-interactions": "^8.6.12",
     "@storybook/addon-links": "^8.6.12",
+    "@storybook/addon-onboarding": "^8.6.13",
     "@storybook/blocks": "^8.6.12",
     "@storybook/react": "^8.6.12",
     "@storybook/react-vite": "^8.6.12",
+    "@storybook/test": "^8.6.13",
     "@tailwindcss/postcss7-compat": "^2.2.17",
     "@tailwindcss/vite": "^4.1.5",
     "@types/chrome": "^0.0.263",
@@ -41,7 +44,11 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+
+    "eslint-plugin-storybook": "^0.12.0",
+
     "git-commit-msg-linter": "^5.0.8",
+
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "postcss": "^8.5.3",
@@ -50,5 +57,10 @@
     "typescript-eslint": "^8.30.1",
     "vite": "^5.4.19",
     "vitest": "^3.1.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
