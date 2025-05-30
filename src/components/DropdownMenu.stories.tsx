@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { DropdownMenu } from "../components/DropdownMenu";
+import { DropdownMenu } from "./DropdownMenu";
 import { within, userEvent, expect } from "@storybook/test";
 
 const meta: Meta<typeof DropdownMenu> = {
@@ -30,7 +30,7 @@ export const SelectCourse: Story = {
     await userEvent.click(option);
 
     await expect(
-      canvas.getByText(/send a message to golf course two/i),
+      canvas.getByText(/send a message to golf course two/i)
     ).toBeInTheDocument();
   },
 };
