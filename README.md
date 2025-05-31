@@ -4,25 +4,38 @@ A Chrome browser extension for CommuniteeGolf chat functionality.
 
 ## Features
 
-- User authentication
-- Real-time chat messaging
-- Chrome extension integration
+-   User authentication
+-   Real-time chat messaging
+-   Chrome extension integration
 
 ## Tech Stack
 
-- React + TypeScript
-- Vite
-- Tailwind CSS
-- Chrome Extensions API (Manifest V3)
-- Storybook for component documentation
+-   React + TypeScript
+-   Vite
+-   Tailwind CSS
+-   Chrome Extensions API (Manifest V3)
+-   Storybook for component documentation
 
 ## Development
 
+## Login API Implementation
+
+This project includes a mock backend for handling user login requests.
+
+### Endpoint
+
+**POST /login**
+
+-   Request body:
+    ```json
+    { "username": "manager", "password": "golfcourse123" }
+    ```
+
 ### Prerequisites
 
-- Node.js (v22.12.0 or higher)
-- npm (v9.5.1 or higher)
-- Chrome browser
+-   Node.js (v22.12.0 or higher)
+-   npm (v9.5.1 or higher)
+-   Chrome browser
 
 ### Installation
 
@@ -46,9 +59,9 @@ npm run dev
 ```
 
 4. Load the extension in Chrome:
-   - Open Chrome and navigate to `chrome://extensions/`
-   - Enable "Developer mode" in the top right
-   - Click "Load unpacked" and select the `dist` directory
+    - Open Chrome and navigate to `chrome://extensions/`
+    - Enable "Developer mode" in the top right
+    - Click "Load unpacked" and select the `dist` directory
 
 ### Building
 
@@ -87,9 +100,9 @@ Visit `http://localhost:6006` to view the Storybook interface.
 
 The project includes GitHub Actions workflows for:
 
-- Automated testing
-- Building and packaging the extension
-- Creating releases
+-   Automated testing
+-   Building and packaging the extension
+-   Creating releases
 
 ## Contributing
 
@@ -140,9 +153,9 @@ If your commit message does not conform to the correct pattern, you will receive
 
 This project uses the following key libraries
 
-- [TypeScript](https://www.typescriptlang.org/)
-- [TailwindCSS](https://tailwindcss.com/docs/installation)
-- [Tailwind Components](https://tailwindui.com/components)
-- [Headless UI](https://headlessui.com/)
-- [Vite JS](https://vitejs.dev/)
-- [Storybook JS](https://storybook.js.org/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [TailwindCSS](https://tailwindcss.com/docs/installation)
+-   [Tailwind Components](https://tailwindui.com/components)
+-   [Headless UI](https://headlessui.com/)
+-   [Vite JS](https://vitejs.dev/)
+-   [Storybook JS](https://storybook.js.org/)
