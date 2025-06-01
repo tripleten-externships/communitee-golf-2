@@ -31,7 +31,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
 	// mock "fetch" call
 	const mockLoginRequest = async (url: string, options: any) => {
-		console.log('Calling:', url); // ✅ instructor will see this
+		console.log('Calling:', url); 
 
 		return new Promise<Response>((resolve) => {
 			setTimeout(() => {
@@ -97,7 +97,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
 			if (response.status === 200) {
 				localStorage.setItem('mock_token', data.token);
-				setMessage('✅ You have been successfully logged in!');
+				setMessage('You have been successfully logged in!');
 				onLogin();
 			} else {
 				setMessage(data.error || 'Something went wrong');
