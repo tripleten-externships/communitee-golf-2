@@ -1,20 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { LoginForm } from "./LoginForm";
+import type { Meta, StoryObj } from '@storybook/react';
+import { LoginForm } from './LoginForm';
 
-const meta = {
-  title: "Components/LoginForm",
-  component: LoginForm,
-  parameters: {
-    layout: "centered",
-  },
-  tags: ["autodocs"],
-} satisfies Meta<typeof LoginForm>;
-
+const meta: Meta<typeof LoginForm> = {
+	title: 'Components/LoginForm',
+	component: LoginForm,
+	parameters: {
+		layout: 'fullscreen',
+	},
+	argTypes: {
+		username: { control: 'text' },
+		password: { control: 'text' },
+		onLogin: { action: 'onLogin triggered' },
+		onUsernameChange: { action: 'username changed' },
+		onPasswordChange: { action: 'password changed' },
+	},
+};
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    onLogin: () => console.log("Login clicked"),
-  },
+export const Default: StoryObj<typeof LoginForm> = {
+	args: {
+		username: '',
+		password: '',
+		onLogin: () => console.log('Login clicked'),
+	},
 };
