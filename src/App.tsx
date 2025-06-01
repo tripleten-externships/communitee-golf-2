@@ -10,7 +10,7 @@ export const App: React.FC = () => {
 				<LoginForm onLogin={() => setIsLoggedIn(true)} />
 			) : (
 				<div className='text-center text-lg font-semibold'>
-					✅ Logged in successfully — token saved in localStorage
+					Logged in successfully — token saved in localStorage
 				</div>
 			)}
 		</div>
