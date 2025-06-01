@@ -2,7 +2,7 @@ import React from "react";
 import { Header } from "./Header";
 
 interface LoginFormProps {
-  onLogin: () => void;
+  onLogin: (authToken: string) => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
@@ -11,7 +11,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin();
+    const token = "example-token";
+    onLogin(token);
   };
 
   return (

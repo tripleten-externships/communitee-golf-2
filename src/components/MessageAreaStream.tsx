@@ -76,7 +76,7 @@ const MessageAreaStream = ({
   }, [clientId, token]);
 
   // Simulate typing indicator
-  /*
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsTyping(true);
@@ -88,7 +88,6 @@ const MessageAreaStream = ({
 
     return () => clearTimeout(timeout);
   }, []);
-*/
 
   useEffect(() => {
     const socket = new WebSocket("ws://localhost:8080");
@@ -125,10 +124,12 @@ const MessageAreaStream = ({
 
           const showDateDivider = currentDateLabel !== prevDateLabel;
 
+          const getMinuteLabel = (dateStr: string) =>
+            new Date(dateStr).toISOString().slice(0, 16);
+
           const shouldShowTime =
             !prev ||
-            new Date(prev.sentAt).getMinutes() !==
-              new Date(msg.sentAt).getMinutes() ||
+            getMinuteLabel(prev.sentAt) !== getMinuteLabel(msg.sentAt) ||
             prev.senderId !== msg.senderId;
 
           return (

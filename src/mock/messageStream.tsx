@@ -81,6 +81,12 @@ export const messageStreams = [
         sentAt: "2020-04-26T18:30:00.000Z",
         senderId: "client-23",
       },
+      {
+        id: "9",
+        content: "Also, can I bring a guest?",
+        sentAt: "2020-04-26T18:30:10.000Z",
+        senderId: "client-23",
+      },
     ],
   },
 ];

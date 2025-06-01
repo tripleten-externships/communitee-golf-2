@@ -7,7 +7,7 @@ interface Location {
 }
 
 export const DropdownMenu: React.FC<{
-  locations: Location[];
+  locations?: Location[];
   selectedLocation: Location | null;
   onSelectLocation: (location: Location) => void;
 }> = ({ locations, selectedLocation, onSelectLocation }) => {
@@ -28,12 +28,12 @@ export const DropdownMenu: React.FC<{
 
           <MenuItems className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-[12px] bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
             <div className="py-1">
-              {locations.length === 0 ? (
+              {locations?.length === 0 ? (
                 <div className="text-sm text-gray-500 px-4 py-2">
                   No locations found.
                 </div>
               ) : (
-                locations.map((location) => (
+                locations?.map((location) => (
                   <MenuItem key={location.id} as="div">
                     {({ active }) => (
                       <button
