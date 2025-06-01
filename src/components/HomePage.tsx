@@ -22,7 +22,12 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [locationId, setLocationId] = useState<string | null>(null);
   const [streams, setStreams] = useState<MessageStream[]>([]);
   const [loading, setLoading] = useState(false);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
 
+  // Fetch locations when the component mounts
   useEffect(() => {
     if (!locationId || !token) return;
     console.log("Selected locationId:", locationId);
@@ -42,10 +47,23 @@ export const HomePage: React.FC<HomePageProps> = ({
       .finally(() => setLoading(false));
   }, [locationId, token]);
 
-  const handleLocationSelect = (location: Location) => {
-    setLocationId(location.id);
-    onSelectLocation?.(location);
-  };
+  // Fetch locations when the component mounts or token changes
+  useEffect(() => {
+    if (!token) return;
+    fetch("http://localhost:8080/location", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setLocations(data);
+        if (data.length > 0) {
+          setSelectedLocation(data[0]);
+          setLocationId(data[0].id);
+          onSelectLocation?.(data[0]);
+        }
+      })
+      .catch((err) => console.error("Error loading locations:", err));
+  }, [token, onSelectLocation]);
 
   const handleStreamSelect = (stream: MessageStream) => {
     console.log("Selected stream:", stream);
@@ -55,7 +73,15 @@ export const HomePage: React.FC<HomePageProps> = ({
     <div className="flex flex-col items-center w-full">
       <Header isLoginPage={false} />
       <div className="mt-4 w-full max-w-md">
-        <DropdownMenu token={token} onSelectLocation={handleLocationSelect} />
+        <DropdownMenu
+          locations={locations}
+          selectedLocation={selectedLocation}
+          onSelectLocation={(location) => {
+            setSelectedLocation(location);
+            setLocationId(location.id);
+            onSelectLocation?.(location);
+          }}
+        />
       </div>
       <div className="mt-6 w-full max-w-md">
         <MessageTab
