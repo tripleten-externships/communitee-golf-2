@@ -28,11 +28,15 @@ export const DropdownMenu: React.FC<{
       .then((res) => res.json())
       .then((data) => {
         setLocations(data);
+        if (data.length > 0) {
+          setSelectedLocation(data[0]);
+          onSelectLocation?.(data[0]);
+        }
         setError(null);
       })
       .catch((err) => console.error("Failed to load locations:", err))
       .finally(() => setLoading(false));
-  }, [token]);
+  }, [token, onSelectLocation]);
 
   return (
     <div className="w-[336px] h-[595px] bg-white rounded-md pt-5 pb-5 px-4 relative inline-block text-left">
@@ -67,6 +71,7 @@ export const DropdownMenu: React.FC<{
                   <button
                     onClick={() => {
                       setSelectedLocation(location);
+                      console.log("Selected location:", selectedLocation);
                       onSelectLocation?.(location);
                     }}
                     className={`w-full text-left px-4 py-3 text-sm ${
