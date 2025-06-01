@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  formatDetailTime,
+  getMessageDateLabel,
+} from "../utils/formatMessageTime";
 
 const MOCK_CLIENT_ID = "1";
 const MOCK_USER_ID = "user-123";
@@ -69,27 +73,16 @@ const MessageAreaStream = ({
       .catch((err) => console.error("Read marking failed:", err));
   }, [clientId, token]);
 
-  const formatTimestamp = (sentAt: string, now = new Date()) => {
-    const sentTime = new Date(sentAt);
-    const diff = (now.getTime() - sentTime.getTime()) / 1000;
-
-    if (diff < 60) return "just now";
-    if (diff < 3600) return `${Math.floor(diff / 60)} mins ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
-
-    return sentTime.toLocaleTimeString([], {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
     <div className="flex flex-col h-full border border-gray-300 p-4 rounded-lg">
       <div className="flex-1 overflow-y-auto mb-4 flex flex-col">
         {messages.map((msg, index) => {
           const prev = messages[index - 1];
+          const currentDateLabel = getMessageDateLabel(msg.sentAt);
+          const prevDateLabel = prev ? getMessageDateLabel(prev.sentAt) : null;
+
+          const showDateDivider = currentDateLabel !== prevDateLabel;
+
           const shouldShowTime =
             !prev ||
             new Date(prev.sentAt).getMinutes() !==
@@ -98,13 +91,18 @@ const MessageAreaStream = ({
 
           return (
             <div key={msg.id} className="flex flex-col items-start">
+              {showDateDivider && (
+                <div className="text-center text-xs text-gray-500 my-4 w-full">
+                  — {currentDateLabel} —
+                </div>
+              )}
               {shouldShowTime && (
                 <span
                   className={`text-[10px] text-gray-500 ${
                     msg.senderId === userId ? "self-end" : "self-start"
                   }`}
                 >
-                  {formatTimestamp(msg.sentAt)}
+                  {formatDetailTime(msg.sentAt)}
                 </span>
               )}
               <div
