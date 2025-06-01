@@ -4,28 +4,32 @@ import { LoginForm } from './LoginForm';
 const meta: Meta<typeof LoginForm> = {
 	title: 'Components/LoginForm',
 	component: LoginForm,
-	tags: ['autodocs'],
 	parameters: {
 		layout: 'fullscreen',
+	},
+	argTypes: {
+		username: { control: 'text' },
+		password: { control: 'text' },
+		onLogin: { action: 'onLogin triggered' },
+		onUsernameChange: { action: 'username changed' },
+		onPasswordChange: { action: 'password changed' },
 	},
 };
 
 export default meta;
+
 type Story = StoryObj<typeof LoginForm>;
 
 export const Default: Story = {
 	args: {
-		onLogin: () => console.log('Login successful'),
+		username: '',
+		password: '',
 	},
 };
 
 export const PreFilled: Story = {
-	render: (args) => (
-		<LoginForm
-			{...args}
-			onLogin={() => {
-				console.log('Logging in with pre-filled data');
-			}}
-		/>
-	),
+	args: {
+		username: 'manager',
+		password: 'golfcourse123',
+	},
 };
