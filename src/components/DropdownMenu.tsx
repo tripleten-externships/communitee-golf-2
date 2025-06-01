@@ -13,9 +13,9 @@ export const DropdownMenu: React.FC<{
 }> = ({ locations, selectedLocation, onSelectLocation }) => {
   return (
     <div className="w-full flex justify-center">
-      <div className="w-[336px] bg-white rounded-md pt-2 pb-4 px-4 relative inline-block text-left">
+      <div className="w-[336px] bg-white rounded-md pt-1 pb-4 relative inline-block text-left">
         <Menu as="div" className="relative w-full">
-          <div className="text-sm text-gray-600 mt-1 mb-1">location</div>
+          <div className="text-sm text-gray-600 mt-0 mb-1">location</div>
           <div>
             <MenuButton className="inline-flex w-full justify-between rounded-[12px] bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 outline outline-1 outline-black">
               {selectedLocation?.name || "Select location"}

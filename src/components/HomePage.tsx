@@ -70,32 +70,37 @@ export const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <Header isLoginPage={false} />
-      <div className="mt-4 w-full max-w-md">
-        <DropdownMenu
-          locations={locations}
-          selectedLocation={selectedLocation}
-          onSelectLocation={(location) => {
-            setSelectedLocation(location);
-            setLocationId(location.id);
-            onSelectLocation?.(location);
-          }}
-        />
-      </div>
-      <div className="mt-6 w-full max-w-md">
-        <MessageTab
-          unreadCount={streams.reduce((sum, s) => sum + s.unreadCount, 0)}
-        />
-      </div>
-      <div className="mt-4 w-full max-w-md">
-        {loading ? (
-          <p className="text-center text-sm text-gray-500">
-            Loading messages...
-          </p>
-        ) : (
-          <MessageArea streams={streams} onSelectStream={handleStreamSelect} />
-        )}
+    <div className="w-[336px] h-[595px] rounded-2xl border border-[#dedede] shadow-lg p-4 overflow-y-auto">
+      <div className="flex flex-col w-full">
+        <Header isLoginPage={false} />
+        <div className="mt-[12px] w-full">
+          <DropdownMenu
+            locations={locations}
+            selectedLocation={selectedLocation}
+            onSelectLocation={(location) => {
+              setSelectedLocation(location);
+              setLocationId(location.id);
+              onSelectLocation?.(location);
+            }}
+          />
+        </div>
+        <div className="w-full">
+          <MessageTab
+            unreadCount={streams.reduce((sum, s) => sum + s.unreadCount, 0)}
+          />
+        </div>
+        <div className="mt-[16px] w-full">
+          {loading ? (
+            <p className="text-center text-sm text-gray-500">
+              Loading messages...
+            </p>
+          ) : (
+            <MessageArea
+              streams={streams}
+              onSelectStream={handleStreamSelect}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
