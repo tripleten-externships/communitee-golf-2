@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   formatDetailTime,
   getMessageDateLabel,
@@ -20,10 +20,12 @@ const MessageAreaStream = ({
   initialMessages?: Message[];
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const token = localStorage.getItem("token");
   const clientId = MOCK_CLIENT_ID;
   const userId = MOCK_USER_ID;
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Fetch messages when the component mounts or clientId changes
   // Show initial messages if clientId is not available
@@ -73,6 +75,46 @@ const MessageAreaStream = ({
       .catch((err) => console.error("Read marking failed:", err));
   }, [clientId, token]);
 
+  // Simulate typing indicator
+  /*
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTyping(true);
+
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 3000);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+*/
+
+  useEffect(() => {
+    const socket = new WebSocket("ws://localhost:8080");
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (
+        data.type === "typing" &&
+        data.clientId === clientId &&
+        data.userId !== userId
+      ) {
+        setIsTyping(true);
+
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+        }
+
+        timeoutRef.current = setTimeout(() => {
+          setIsTyping(false);
+        }, 3000);
+      }
+    };
+
+    return () => socket.close();
+  }, [clientId, userId]);
+
   return (
     <div className="flex flex-col h-full border border-gray-300 p-4 rounded-lg">
       <div className="flex-1 overflow-y-auto mb-4 flex flex-col">
@@ -117,6 +159,15 @@ const MessageAreaStream = ({
             </div>
           );
         })}
+        {isTyping && (
+          <div className="flex flex-col items-start">
+            <div className="bg-gray-200 rounded-[16px] rounded-tl-none px-3 py-2 max-w-[60px] flex gap-[4px]">
+              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce"></div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
