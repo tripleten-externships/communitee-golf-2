@@ -12,7 +12,7 @@ export const DropdownMenu: React.FC<{
   onSelectLocation?: (location: Location) => void;
 }> = ({ token, onSelectLocation }) => {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    null,
+    null
   );
   const [locations, setLocations] = useState<Location[]>([]);
   const [loading, setLoading] = useState(false);
