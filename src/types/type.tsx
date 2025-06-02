@@ -15,3 +15,11 @@ export type MessageStream = {
   locationId: string;
   messages: Message[];
 };
+
+export type User = {
+  id: string;
+  username: string;
+  role: string;
+  name: string;
+  avatar: string;
+};

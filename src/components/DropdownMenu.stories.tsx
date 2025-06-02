@@ -16,39 +16,28 @@ export default meta;
 
 type Story = StoryObj<typeof DropdownMenu>;
 
-const Template = (args: React.ComponentProps<typeof DropdownMenu>) => {
-  const safeLocations = args.locations ?? [];
-  const [selected, setSelected] = useState(safeLocations[0] || null);
+const mockLocations = [
+  { id: "1", name: "Gilroy Golf Course" },
+  { id: "2", name: "Golf Course Two" },
+  { id: "3", name: "Pebble Beach" },
+];
+
+const Template = () => {
+  const [selected, setSelected] = useState(mockLocations[0]);
   return (
     <DropdownMenu
-      {...args}
-      locations={safeLocations}
+      locations={mockLocations}
       selectedLocation={selected}
-      onSelectLocation={setSelected}
+      onSelectLocation={(loc) => setSelected(loc)}
     />
   );
 };
 
 export const Default: Story = {
   render: Template,
-  args: {
-    locations: [
-      { id: "1", name: "Gilroy Golf Course" },
-      { id: "2", name: "Golf Course Two" },
-      { id: "3", name: "Pebble Beach" },
-    ],
-  },
 };
 
 export const SelectCourse: Story = {
-  render: Template,
-  args: {
-    locations: [
-      { id: "1", name: "Gilroy Golf Course" },
-      { id: "2", name: "Golf Course Two" },
-      { id: "3", name: "Pebble Beach" },
-    ],
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

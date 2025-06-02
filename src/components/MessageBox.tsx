@@ -1,79 +1,99 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { Message } from "../types/type";
 
-export default function MessageBox() {
-	const [message, setMessage] = useState('');
-	const [sentMessage, setSentMessage] = useState<string | null>(null);
-	const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
+export default function MessageBox({
+  streamId,
+  token,
+  onMessageSent,
+}: {
+  streamId: string;
+  token: string;
+  onMessageSent?: (newMessage: Message) => void;
+}) {
+  const [message, setMessage] = useState("");
+  const [sentMessage, setSentMessage] = useState<string | null>(null);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
-	const handleSend = () => {
-		if (message.trim()) {
-			setSentMessage('Message sent!');
-			setMessage('');
+  const handleSend = async () => {
+    if (!message.trim()) return;
 
-			if (timer) {
-				clearTimeout(timer);
-			}
-			const timeout = setTimeout(() => {
-				setSentMessage(null);
-			}, 2000);
+    try {
+      const res = await fetch(`http://localhost:8080/message/${streamId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ content: message }),
+      });
 
-			setTimer(timeout);
-		}
-	};
+      if (!res.ok) throw new Error("Failed to send message");
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setMessage(e.target.value);
+      const newMessage: Message = {
+        id: `${Date.now()}`,
+        content: message,
+        sentAt: new Date().toISOString(),
+        senderId: "user-123",
+      };
 
-		if (sentMessage) {
-			setSentMessage(null);
+      if (onMessageSent) onMessageSent(newMessage);
 
-			if (timer) {
-				clearTimeout(timer);
-				setTimer(null);
-			}
-		}
-	};
+      setSentMessage("Message sent!");
+      setMessage("");
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter' && message.trim()) {
-			handleSend();
-		}
-	};
+      if (timer) clearTimeout(timer);
+      setTimer(setTimeout(() => setSentMessage(null), 2000));
+    } catch (err) {
+      console.error("Error sending message:", err);
+    }
+  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
 
-	return (
-		<div className='space-y-2 relative w-fit'>
-			<label
-				htmlFor='message'
-				className='block text-sm font-medium text-gray-900 mb-2'
-			>
-				Message
-			</label>
-			<div className='flex items-center justify-between w-[304px] h-[42px] rounded-full border border-gray-400 px-4 bg-white'>
-				<input
-					id='message'
-					name='message'
-					type='text'
-					placeholder='Write a message...'
-					className='flex-grow outline-none text-gray-900 placeholder-gray-400 text-sm'
-					value={message}
-					onChange={handleChange}
-					onKeyDown={handleKeyDown}
-				/>
-				<button
-					onClick={handleSend}
-					disabled={!message.trim()}
-					type='button'
-					className='ml-3 disabled:opacity-50 disabled:cursor-not-allowed'
-				>
-					<img src='send.png' alt='Send' className='w-6 h-6' />
-				</button>
-			</div>
+    if (sentMessage) {
+      setSentMessage(null);
 
-			{sentMessage && (
-				<div className='absolute -bottom-10 left-0 w-full bg-green-100 text-green-700 text-sm p-2 rounded shadow'>
-					{sentMessage}
-				</div>
-			)}
-		</div>
-	);
+      if (timer) {
+        clearTimeout(timer);
+        setTimer(null);
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && message.trim()) {
+      handleSend();
+    }
+  };
+
+  return (
+    <div className="space-y-2 relative w-fit">
+      <div className="flex items-center justify-between w-[304px] h-[42px] rounded-[12px] border border-gray-400 px-4 bg-white">
+        <input
+          id="message"
+          name="message"
+          type="text"
+          placeholder="Write a message..."
+          className="flex-grow outline-none text-gray-900 placeholder-gray-400 text-sm"
+          value={message}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          onClick={handleSend}
+          disabled={!message.trim()}
+          type="button"
+          className="ml-3 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <img src="send.png" alt="Send" className="w-6 h-6" />
+        </button>
+      </div>
+
+      {sentMessage && (
+        <div className="absolute -bottom-10 left-0 w-full bg-green-100 text-green-700 text-sm p-2 rounded shadow">
+          {sentMessage}
+        </div>
+      )}
+    </div>
+  );
 }

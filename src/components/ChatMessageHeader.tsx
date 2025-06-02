@@ -4,9 +4,10 @@ import { User } from "../types";
 
 type ChatHeaderProps = {
   user: User;
+  onBack?: () => void;
 };
 
-export const ChatMessageHeader = ({ user }: ChatHeaderProps) => {
+export const ChatMessageHeader = ({ user, onBack }: ChatHeaderProps) => {
   return (
     <div>
       <div className="flex justify-between items-end">
@@ -15,6 +16,7 @@ export const ChatMessageHeader = ({ user }: ChatHeaderProps) => {
           className="cursor-pointer"
           alt="back-button"
           src={backbutton}
+          onClick={onBack}
         ></img>
         <img
           className="w-9 h-9 rounded-full mx-auto"
