@@ -22,3 +22,24 @@ export function formatMessageTime(isoString: string): string {
 
   return format(date, "MMM d");
 }
+
+export const formatDetailTime = (sentAt: string, now = new Date()) => {
+  const sentTime = new Date(sentAt);
+  const diff = (now.getTime() - sentTime.getTime()) / 1000;
+
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} mins ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
+
+  return sentTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+export const getMessageDateLabel = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
+  return format(date, "MMM d");
+};
