@@ -18,6 +18,7 @@ export const ChatMessagePage: React.FC<ChatMessagePageProps> = ({
   onBack,
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isTyping, setIsTyping] = useState(false);
   const token = localStorage.getItem("token");
 
