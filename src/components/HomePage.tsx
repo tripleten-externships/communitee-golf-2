@@ -76,9 +76,13 @@ export const HomePage: React.FC<HomePageProps> = ({
   return selectedStream ? (
     <ChatMessagePage
       user={{
+        id: "client-" + selectedStream.id,
+        username: selectedStream.clientName,
+        role: "client",
         name: selectedStream.clientName,
         avatar: selectedStream.clientImage,
       }}
+      streamId={selectedStream.id}
       onBack={() => setSelectedStream(null)}
     />
   ) : (

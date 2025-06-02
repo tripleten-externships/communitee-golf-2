@@ -1,26 +1,52 @@
 import { useState } from "react";
+import { Message } from "../types/type";
 
-export default function MessageBox() {
+export default function MessageBox({
+  streamId,
+  token,
+  onMessageSent,
+}: {
+  streamId: string;
+  token: string;
+  onMessageSent?: (newMessage: Message) => void;
+}) {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState<string | null>(null);
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const handleSend = () => {
-    if (message.trim()) {
+  const handleSend = async () => {
+    if (!message.trim()) return;
+
+    try {
+      const res = await fetch(`http://localhost:8080/message/${streamId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ content: message }),
+      });
+
+      if (!res.ok) throw new Error("Failed to send message");
+
+      const newMessage: Message = {
+        id: `${Date.now()}`,
+        content: message,
+        sentAt: new Date().toISOString(),
+        senderId: "user-123",
+      };
+
+      if (onMessageSent) onMessageSent(newMessage);
+
       setSentMessage("Message sent!");
       setMessage("");
 
-      if (timer) {
-        clearTimeout(timer);
-      }
-      const timeout = setTimeout(() => {
-        setSentMessage(null);
-      }, 2000);
-
-      setTimer(timeout);
+      if (timer) clearTimeout(timer);
+      setTimer(setTimeout(() => setSentMessage(null), 2000));
+    } catch (err) {
+      console.error("Error sending message:", err);
     }
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
 

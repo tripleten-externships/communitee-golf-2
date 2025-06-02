@@ -1,11 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   formatDetailTime,
   getMessageDateLabel,
 } from "../utils/formatMessageTime";
-
-const MOCK_CLIENT_ID = "1";
-const MOCK_USER_ID = "user-123";
 
 type Message = {
   id: string;
@@ -14,51 +11,45 @@ type Message = {
   senderId: string;
 };
 
-const MessageAreaStream = ({
-  initialMessages,
-}: {
-  initialMessages?: Message[];
-}) => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
+interface MessageAreaStreamProps {
+  messages: Message[];
+  userId: string;
+  isTyping: boolean;
+  setIsTyping: (value: boolean) => void;
+  clientId: string;
+  token: string;
+}
 
-  const token = localStorage.getItem("token");
-  const clientId = MOCK_CLIENT_ID;
-  const userId = MOCK_USER_ID;
+const MessageAreaStream: React.FC<MessageAreaStreamProps> = ({
+  messages,
+  userId,
+  isTyping,
+  setIsTyping,
+  clientId,
+  token,
+}) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Fetch messages when the component mounts or clientId changes
-  // Show initial messages if clientId is not available
   useEffect(() => {
-    const loadMessages = async () => {
-      if (!clientId || !token) {
-        if (initialMessages) {
-          setMessages(initialMessages);
-        }
-        return;
-      }
+    const socket = new WebSocket("ws://localhost:8080");
 
-      try {
-        const res = await fetch(
-          `http://localhost:8080/message-stream/${clientId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!res.ok) throw new Error("Failed to fetch messages");
-        const data = await res.json();
-        setMessages(data.messages);
-      } catch (err) {
-        console.error("Error fetching messages:", err);
-        if (initialMessages) {
-          setMessages(initialMessages);
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (
+        data.type === "typing" &&
+        data.clientId === clientId &&
+        data.userId !== userId
+      ) {
+        setIsTyping(true);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
         }
+        timeoutRef.current = setTimeout(() => setIsTyping(false), 3000);
       }
     };
-    loadMessages();
-  }, [clientId, token, initialMessages]);
+
+    return () => socket.close();
+  }, [clientId, userId, setIsTyping]);
 
   // Mark as read after messages are loaded
   useEffect(() => {
@@ -74,45 +65,6 @@ const MessageAreaStream = ({
       })
       .catch((err) => console.error("Read marking failed:", err));
   }, [clientId, token]);
-
-  // Simulate typing indicator
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsTyping(true);
-
-      setTimeout(() => {
-        setIsTyping(false);
-      }, 3000);
-    }, 1000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
-
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (
-        data.type === "typing" &&
-        data.clientId === clientId &&
-        data.userId !== userId
-      ) {
-        setIsTyping(true);
-
-        if (timeoutRef.current !== null) {
-          clearTimeout(timeoutRef.current);
-        }
-
-        timeoutRef.current = setTimeout(() => {
-          setIsTyping(false);
-        }, 3000);
-      }
-    };
-
-    return () => socket.close();
-  }, [clientId, userId]);
 
   return (
     <div className="flex flex-col h-full ">
@@ -142,7 +94,7 @@ const MessageAreaStream = ({
               {shouldShowTime && (
                 <span
                   className={`text-[10px] text-gray-500 ${
-                    msg.senderId === userId ? "self-end" : "self-start"
+                    msg.senderId === userId ? "self-start" : "self-end"
                   }`}
                 >
                   {formatDetailTime(msg.sentAt)}
@@ -151,8 +103,8 @@ const MessageAreaStream = ({
               <div
                 className={` text-sm mb-1 pt-[8px] pr-[12px] pb-[12px] pl-[12px] rounded inline-block max-w-[260px] break-words ${
                   msg.senderId === userId
-                    ? "bg-red-100 self-end rounded-[16px] rounded-tr-none"
-                    : "bg-gray-100 self-start rounded-[16px] rounded-tl-none"
+                    ? "bg-gray-100 self-start rounded-[16px] rounded-tl-none"
+                    : "bg-red-100 self-end rounded-[16px] rounded-tr-none"
                 }`}
               >
                 <span className="m-0 p-0">{msg.content}</span>
