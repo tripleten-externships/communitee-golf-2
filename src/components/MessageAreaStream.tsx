@@ -115,7 +115,7 @@ const MessageAreaStream = ({
   }, [clientId, userId]);
 
   return (
-    <div className="flex flex-col h-full border border-gray-300 p-4 rounded-lg">
+    <div className="flex flex-col h-full ">
       <div className="flex-1 overflow-y-auto mb-4 flex flex-col">
         {messages.map((msg, index) => {
           const prev = messages[index - 1];
