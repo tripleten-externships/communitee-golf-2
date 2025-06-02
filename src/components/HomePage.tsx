@@ -4,6 +4,7 @@ import { DropdownMenu } from "./DropdownMenu";
 import { MessageTab } from "./MessageTab";
 import { MessageArea } from "./MessageArea";
 import { MessageStream } from "../types/type";
+import { ChatMessagePage } from "./ChatMessagePage";
 
 interface Location {
   id: string;
@@ -24,6 +25,9 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [loading, setLoading] = useState(false);
   const [locations, setLocations] = useState<Location[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
+  const [selectedStream, setSelectedStream] = useState<MessageStream | null>(
     null
   );
 
@@ -66,10 +70,18 @@ export const HomePage: React.FC<HomePageProps> = ({
   }, [token, onSelectLocation]);
 
   const handleStreamSelect = (stream: MessageStream) => {
-    console.log("Selected stream:", stream);
+    setSelectedStream(stream);
   };
 
-  return (
+  return selectedStream ? (
+    <ChatMessagePage
+      user={{
+        name: selectedStream.clientName,
+        avatar: selectedStream.clientImage,
+      }}
+      onBack={() => setSelectedStream(null)}
+    />
+  ) : (
     <div className="w-[336px] h-[595px] rounded-2xl border border-[#dedede] shadow-lg p-4 overflow-y-auto">
       <div className="flex flex-col w-full">
         <Header isLoginPage={false} />

@@ -7,6 +7,10 @@ interface HeaderProps {
   onBack?: () => void;
 }
 
+const handleClose = () => {
+  window.close();
+};
+
 export const Header: React.FC<HeaderProps> = ({ isLoginPage, onBack }) => {
   const handleBack = () => {
     onBack?.();
@@ -29,7 +33,10 @@ export const Header: React.FC<HeaderProps> = ({ isLoginPage, onBack }) => {
         <img src={logo} alt="CommuniTee Logo" className="h-5" />
       </div>
 
-      <button className="w-6 h-6 flex items-center justify-center bg-transparent border-none">
+      <button
+        onClick={handleClose}
+        className="w-6 h-6 flex items-center justify-center bg-transparent border-none"
+      >
         <img src={closeIcon} alt="Close" className="w-6 h-6" />
       </button>
     </div>

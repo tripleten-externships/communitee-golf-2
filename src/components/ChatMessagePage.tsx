@@ -7,14 +7,18 @@ import { User } from "../types";
 
 interface ChatMessagePageProps {
   user: User;
+  onBack?: () => void;
 }
 
-export const ChatMessagePage: React.FC<ChatMessagePageProps> = ({ user }) => {
+export const ChatMessagePage: React.FC<ChatMessagePageProps> = ({
+  user,
+  onBack,
+}) => {
   return (
     <div className="w-[336px] h-[595px] rounded-2xl border border-[#dedede] shadow-lg p-5 flex flex-col justify-between bg-white">
-      <Header isLoginPage={false} />
+      <Header isLoginPage={false} onBack={onBack} />
       <div className="flex-1 overflow-hidden mt-4 mb-3 flex flex-col">
-        <ChatMessageHeader user={user} />
+        <ChatMessageHeader user={user} onBack={onBack} />
         <div className="flex-1 overflow-hidden mt-4">
           <MessageAreaStream />
         </div>
