@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import MessageAreaStream from "./MessageAreaStream";
 import { useEffect, useState } from "react";
+import "../src/index.css";
 
 const mockMessages = [
   {
@@ -53,12 +54,21 @@ export const Default: Story = {
 };
 
 function TypingDemoWrapper() {
-  const [isTyping, setIsTyping] = useState(true);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    // Turn off the typing indicator after 3 seconds
-    const stop = setTimeout(() => setIsTyping(false), 3000);
-    return () => clearTimeout(stop);
+    const start = setTimeout(() => {
+      setIsTyping(true);
+    }, 300);
+
+    const stop = setTimeout(() => {
+      setIsTyping(false);
+    }, 3300); // start + 3 seconds
+
+    return () => {
+      clearTimeout(start);
+      clearTimeout(stop);
+    };
   }, []);
 
   return (

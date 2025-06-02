@@ -101,7 +101,7 @@ const MessageAreaStream: React.FC<MessageAreaStreamProps> = ({
                 </span>
               )}
               <div
-                className={` text-sm mb-1 pt-[8px] pr-[12px] pb-[12px] pl-[12px] rounded inline-block max-w-[260px] break-words ${
+                className={` text-sm mb-1 p-4 rounded inline-block max-w-[260px] break-words ${
                   msg.senderId === userId
                     ? "bg-gray-100 self-start rounded-[16px] rounded-tl-none"
                     : "bg-red-100 self-end rounded-[16px] rounded-tr-none"
@@ -114,7 +114,7 @@ const MessageAreaStream: React.FC<MessageAreaStreamProps> = ({
         })}
         {isTyping && (
           <div className="flex flex-col items-start">
-            <div className="bg-gray-200 rounded-[16px] rounded-tl-none px-3 py-2 max-w-[60px] flex gap-[4px]">
+            <div className="bg-gray-200 rounded-[16px] rounded-tl-none pt-[8px] pr-[12px] pb-[12px] pl-[12px] max-w-[60px] flex gap-[4px]">
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce [animation-delay:-0.3s]"></div>
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce [animation-delay:-0.15s]"></div>
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce"></div>

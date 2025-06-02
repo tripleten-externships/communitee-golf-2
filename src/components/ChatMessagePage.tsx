@@ -46,7 +46,8 @@ export const ChatMessagePage: React.FC<ChatMessagePageProps> = ({
           <MessageAreaStream
             messages={messages}
             userId={user.id}
-            isTyping={isTyping}
+            //hard code for showing anime, change it back to "isTyping" for normal
+            isTyping={true}
             setIsTyping={setIsTyping}
             clientId={streamId}
             token={token ?? ""}
